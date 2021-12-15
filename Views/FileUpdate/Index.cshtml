@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string version = DateTime.Now.Millisecond.ToString();
+}
+
+@section stylesheets{
+    <link rel="stylesheet" href="@Url.Content("~/Content/main.css?v=" + version)" />
+    <link href="@Url.Content("~/Content/DataTables/css/jquery.dataTables.min.css")" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/FileUpdateLibs/main.js")"></script>
+    <link href="~/Content/fileUpDate.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+}
+
+<div class="header-container">
+    <div class="header"></div>
+</div>
+<div class="body-container">
+    @Html.Partial("~/Views/FileUpdate/_FileUpDatePartial.cshtml")
+   
+</div>

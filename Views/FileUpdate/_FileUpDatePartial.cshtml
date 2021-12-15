@@ -1,0 +1,104 @@
+﻿<div id="fileUpdate-panel" class="content-panel active">
+    <div class="content">
+        <div class="update-area">
+            <div class="update-area-title">
+                <div class="title">
+                    檔案管理
+                </div>
+            </div>
+            <div class="update-area-content">
+                <div class="file-type">
+                    <div class="type-item" data-type="judge" :class="{ active: judge.isAcitve === true }" v-on:click="openType()" >情資研判簡報</div>
+                    <div class="type-item" data-type="cropInformation" :class="{ active: cropInformation.isAcitve === true }" v-on:click="openType()">農作物防災資訊</div>
+                    <div class="type-item right" data-type="cropPropose" :class="{ active: cropPropose.isAcitve === true }" v-on:click="openType()">農作物防災建議</div>
+                    <div class="type-item" data-type="cropMeasure" :class="{ active: cropMeasure.isAcitve === true }" v-on:click="openType()">作物預防措施</div>
+                    <div class="type-item right" data-type="countyImage" :class="{ active: countyImage.isAcitve === true }" v-on:click="openType()">各縣市圖卡</div>
+                    <div class="type-item" data-type="cropStatistics" :class="{ active: cropStatistics.isAcitve === true }" v-on:click="openType()">易受災作物面積統計</div>
+                </div>
+                <div class="file-list">
+                    <input type="file" class="pptUpload" style="display:none"
+                           ref="newfile" v-on:change="setFile()"
+                           accept="application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+                    <div class="list-block" data-type="judge" :class="{ active: judge.isAcitve === true }">
+                        <div class="row" v-for="item in judge.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name">{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(judge.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-block" data-type="cropInformation" :class="{ active: cropInformation.isAcitve === true }">
+                        <div class="row" v-for="item in cropInformation.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name">{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(cropInformation.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-block" data-type="cropPropose" :class="{ active: cropPropose.isAcitve === true }">
+                        <div class="row" v-for="item in cropPropose.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name">{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(cropPropose.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-block" data-type="cropMeasure" :class="{ active: cropMeasure.isAcitve === true }">
+                        <div class="row" v-for="item in cropMeasure.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name">{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(cropMeasure.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-block" data-type="countyImage" :class="{ active: countyImage.isAcitve === true }">
+                        <div class="row" v-for="item in countyImage.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name">{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(countyImage.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-block" data-type="cropStatistics" :class="{ active: cropStatistics.isAcitve === true }">
+                        <div class="row" v-for="item in cropStatistics.fileList">
+                            <div class="title">{{item.fileName}}</div>
+                            <div class="item">
+                                <div class="file-name" v-if="item.file !== null" :title="item.file.name" >{{item.file.name}}</div>
+                                <div class="file-name" v-else></div>
+                                <div class="button file-select" v-on:click="openFile(cropStatistics.type,item.fileName)"></div>
+                                <div class="button file-update active" v-if="item.file !== null" v-on:click="updateFile(item)"></div>
+                                <div class="button file-update" v-else></div>
+                                <div class="button file-download" v-on:click="downloadFile(item)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
